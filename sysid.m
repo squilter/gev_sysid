@@ -43,4 +43,11 @@ legend show
 
 % K
 
+% simulate 10 seconds
+% t = 0:0.01:10 % time samples
+% r = zeroes(size(t)) % system input
+% x0 = [0 0 0] % initial state
+% [y, t, x] = lsim(sys, r, t)
+% plotyy(t, y(:,1), t, y(:,2), 'plot')
+
 pause;
