@@ -27,19 +27,32 @@ airspeed_synthetic = repelem(airspeed_synthetic, 2);
 
 h = plot(times_rfnd, [rangefinder, throttle/50, airspeed_sensor/3-3.5, climb_rate+0.7]);
 set(h,'LineWidth',3);
-set(h,{'DisplayName'},{'altitude';'throttle';'airspeed';'climbRate'})
-legend show
+set(h,{'DisplayName'},{'altitude';'throttle';'airspeed';'climbRate'});
+legend show;
 
 
-% input to the system is the throttle, output is 
-% data = iddata(throttle, [rangefinder, airspeed_synthetic]);
+data = iddata([rangefinder], throttle);
 
-% [sys, x0, info] = moen4(data, 2);
+[sys, x0, info] = moen4(data, 1);
+sys.a
+sys.b
 
-% q = [100 0; 0 100];
-% r = [0.01 0; 0 0.01];
+pause;
 
-% [K, x, l] = lqr(sys, q, r);
+% simulate 5 seconds of 100% throttle
+time = 0:0.01:5; % time samples
+r = 100*ones(size(time)); % system input
+x0 = [0.5 40]; % initial state
+[y, t, x] = lsim(sys, r, time);
+% plotyy(t, y(:,1), t, y(:,2), 'plot')
+plot(t, y(:,1));
+
+
+
+% q = [100 0; 0 100]
+% r = [0.01 0; 0 0.01]
+
+% [K, x, l] = lqr(sys, q, r)
 
 % K
 
