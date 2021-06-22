@@ -31,36 +31,41 @@ set(h,{'DisplayName'},{'altitude';'throttle';'airspeed';'climbRate'});
 legend show;
 
 
-data = iddata([rangefinder], throttle);
+data = iddata([airspeed_sensor, climb_rate, rangefinder], throttle);
 
-[sys, x0, info] = moen4(data, 1);
-sys.a
-sys.b
+[sysd, x0, info] = moen4(data, 3);
+sysd.a
+sysd.b
 
-pause;
+sysc = d2c(sysd)
 
-% simulate 5 seconds of 100% throttle
-time = 0:0.01:5; % time samples
-r = 100*ones(size(time)); % system input
-x0 = [0.5 40]; % initial state
-[y, t, x] = lsim(sys, r, time);
-% plotyy(t, y(:,1), t, y(:,2), 'plot')
-plot(t, y(:,1));
-
-
-
-% q = [100 0; 0 100]
-% r = [0.01 0; 0 0.01]
-
-% [K, x, l] = lqr(sys, q, r)
-
-% K
-
-% simulate 10 seconds
-% t = 0:0.01:10 % time samples
-% r = zeroes(size(t)) % system input
-% x0 = [0 0 0] % initial state
-% [y, t, x] = lsim(sys, r, t)
-% plotyy(t, y(:,1), t, y(:,2), 'plot')
+sysc.a
+sysc.b
 
 pause;
+
+% % simulate 5 seconds of 100% throttle
+% time = 0:0.01:5; % time samples
+% r = 100*ones(size(time)); % system input
+% x0 = [0.5 40]; % initial state
+% [y, t, x] = lsim(sys, r, time);
+% % plotyy(t, y(:,1), t, y(:,2), 'plot')
+% plot(t, y(:,1));
+
+
+
+% % q = [100 0; 0 100]
+% % r = [0.01 0; 0 0.01]
+
+% % [K, x, l] = lqr(sys, q, r)
+
+% % K
+
+% % simulate 10 seconds
+% % t = 0:0.01:10 % time samples
+% % r = zeroes(size(t)) % system input
+% % x0 = [0 0 0] % initial state
+% % [y, t, x] = lsim(sys, r, t)
+% % plotyy(t, y(:,1), t, y(:,2), 'plot')
+
+% pause;
